@@ -7,11 +7,11 @@ class SRZManager:
     def __init__(self,sock):
         self.__sock = sock
 
-    def send(self):
+    def send(self,sock):
         g = getFiles()
         list = g.exe()
         for i in list:
-            self.__sock.send(i.encode('utf-8'))
+            sock.send(i.encode('utf-8'))
             time.sleep(1)
         print('file info를 전송했습니다.')
 

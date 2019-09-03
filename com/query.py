@@ -27,3 +27,8 @@ class DB:
         sql = """DELETE FROM metadatas WHERE hash = '%s'""" % (hash)
         print(sql)
         self.__executeQuery(sql)
+
+    def deleteOld(self, time):
+        sql = """DELETE FROM metadatas where ctime <= %s""" % (time)
+        print(sql)
+        self.__executeQuery(sql)

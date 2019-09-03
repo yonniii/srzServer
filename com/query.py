@@ -22,3 +22,8 @@ class DB:
         sql = sql % (values[0], values[1], values[2], values[3])
         print(sql)
         self.__executeQuery(sql)
+
+    def deleteHash(self, hash):
+        sql = """DELETE FROM metadatas WHERE hash = '%s'""" % (hash)
+        print(sql)
+        self.__executeQuery(sql)

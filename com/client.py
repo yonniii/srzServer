@@ -7,13 +7,18 @@ class SRZManager:
     def __init__(self,sock):
         self.__sock = sock
 
-    def send(self,sock):
+    def send(self):
         g = getFiles()
         list = g.exe()
         for i in list:
-            sock.send(i.encode('utf-8'))
+            self.__sock.send(i.encode('utf-8'))
             time.sleep(1)
         print('file info를 전송했습니다.')
+
+    def run(self):
+        sender = threading.Thread(target=self.send)
+        sender.start()
+        sender.join()
 
 class RecoveryManager:
     def __init__(self,sock):
@@ -51,6 +56,7 @@ clientSock.connect(('127.0.0.1', port))
 print('접속 완료')
 
 srzmanager = SRZManager(clientSock)
+srzmanager.run()
 recovery = RecoveryManager(clientSock)
 recovery.run()
 

@@ -16,3 +16,9 @@ class DB:
         self.__cursor.execute(sql)
         self.__db.commit()
 
+    def insert(self, data):
+        sql = """INSERT INTO `metadatas`(`ctime`, `filename`, `path`, `hash`) VALUES (%s,'%s','%s','%s')"""
+        values = data.split(',')
+        sql = sql % (values[0], values[1], values[2], values[3])
+        print(sql)
+        self.__executeQuery(sql)

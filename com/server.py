@@ -2,6 +2,7 @@
 from socket import *
 import threading
 import time
+from query import DB
 
 
 def send(sock):
@@ -11,9 +12,13 @@ def send(sock):
 
 
 def receive(sock):
+    db = DB()
     while True:
         recvData = sock.recv(1024)
-        print('상대방 :', recvData.decode('utf-8'))
+        db.insert(recvData.decode())
+        db.deleteHash('14f18045f8648ba6c05c8c0c486d2f55')
+        db.deleteOld('1567046609.8834774')
+        print('상대방 :', recvData.decode('utf-8'),'을 DB에 insert')
 
 
 port = 8081

@@ -15,20 +15,33 @@ class SRZManager:
             time.sleep(1)
         print('file info를 전송했습니다.')
 
-def send(sock):
-    while True:
-        g = getFiles()
-        list = g.exe()
-        for i in list:
-            clientSock.send(i.encode('utf-8'))
-        time.sleep(100)
+class RecoveryManager:
+    def __init__(self,sock):
+        self.__sock = sock
 
+    def send(self):
+        self.__sock.send('request'.encode())
 
-def receive(sock):
-    while True:
-        recvData = sock.recv(1024)
-        print('상대방 :', recvData.decode('utf-8'))
+    def receive(self):
+        print('receive')
+        f=open('metadata.txt',mode='wt', encoding='utf-8')
+        while True:
+            recvData = self.__sock.recv(1024)
+            print(recvData.decode())
+            if recvData.decode() is '0':
+                f.close()
+            self.writeMeta(recvData.decode(),f)
 
+    def writeMeta(self,recvData,f):
+        f.write(recvData+'\n')
+
+    def run(self):
+        sender = threading.Thread(target=self.send )
+        receiver = threading.Thread(target= self.receive)
+        sender.start()
+        receiver.start()
+        sender.join()
+        receiver.join()
 
 port = 8081
 
@@ -37,13 +50,9 @@ clientSock.connect(('127.0.0.1', port))
 
 print('접속 완료')
 
-sender = threading.Thread(target=send, args=(clientSock,))
-receiver = threading.Thread(target=receive, args=(clientSock,))
-
-# sender.start()
 srzmanager = SRZManager(clientSock)
-srzmanager.send()
-receiver.start()
+recovery = RecoveryManager(clientSock)
+recovery.run()
 
 while True:
     time.sleep(1)

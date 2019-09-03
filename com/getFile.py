@@ -11,7 +11,7 @@ class getFiles:
 
     def exe(self):
         fileList = os.listdir(self.path_dir)
-        list = []
+        metalist = []
         hash = md5hash()
         if os.path.exists(self.path_dir):
             for i in fileList:
@@ -21,12 +21,12 @@ class getFiles:
                 time = fileinfo.st_mtime
                 md5 = hash.getHash('%s,%s'%(path,time))
                 # md5 = hash.getHash(path)
-                list.append("%s,%s,%s,%s" %(time,
+                metalist.append("%s,%s,%s,%s" %(time,
                                          i,
                                          path,
                                          md5))
                 # list.append("filename :%s size :%d modified :%s" %(i,fileinfo.st_size,datetime.datetime.fromtimestamp(fileinfo.st_mtime)))
-        return list
+        return metalist
 
 g=getFiles()
 g.exe()

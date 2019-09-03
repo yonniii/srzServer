@@ -3,6 +3,17 @@ import threading
 import time
 from getFile import getFiles
 
+class SRZManager:
+    def __init__(self,sock):
+        self.__sock = sock
+
+    def send(self):
+        g = getFiles()
+        list = g.exe()
+        for i in list:
+            self.__sock.send(i.encode('utf-8'))
+            time.sleep(1)
+        print('file info를 전송했습니다.')
 
 def send(sock):
     while True:
@@ -29,7 +40,9 @@ print('접속 완료')
 sender = threading.Thread(target=send, args=(clientSock,))
 receiver = threading.Thread(target=receive, args=(clientSock,))
 
-sender.start()
+# sender.start()
+srzmanager = SRZManager(clientSock)
+srzmanager.send()
 receiver.start()
 
 while True:

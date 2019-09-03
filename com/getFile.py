@@ -17,7 +17,8 @@ class getFiles:
             for i in fileList:
                 path = self.path_dir+"\\"+i
                 fileinfo = os.stat(path)
-                time = datetime.datetime.fromtimestamp(fileinfo.st_mtime)
+                # time = datetime.datetime.fromtimestamp(fileinfo.st_mtime)
+                time = fileinfo.st_mtime
                 md5 = hash.getHash('%s,%s'%(path,time))
                 # md5 = hash.getHash(path)
                 list.append("%s,%s,%s,%s" %(time,

@@ -32,3 +32,8 @@ class DB:
         sql = """DELETE FROM metadatas where ctime <= %s""" % (time)
         print(sql)
         self.__executeQuery(sql)
+
+    def restore(self):
+        sql = """SELECT * FROM metadatas"""
+        self.__executeQuery(sql)
+        return self.__cursor.fetchall()

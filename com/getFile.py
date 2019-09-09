@@ -7,7 +7,7 @@ import string
 
 class getFiles:
     def __init__(self):
-        self.path_dir = 'C:\\Users\\rkdtj\\Desktop\\3-2\\srzServer\\srzProject\\files'
+        self.path_dir = 'C:\\Users\\yonnii\\Desktop\\3-2\\srzServer\\srzProject\\files'
 
     def exe(self):
         fileList = os.listdir(self.path_dir)

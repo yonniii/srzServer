@@ -1,4 +1,5 @@
 import pymysql
+from md5hash import md5hash
 
 
 class DB:
@@ -17,9 +18,11 @@ class DB:
         self.__db.commit()
 
     def insert(self, data):
+        hash = md5hash()
         sql = """INSERT INTO `metadatas`(`ctime`, `filename`, `path`, `hash`) VALUES (%s,'%s','%s','%s')"""
         values = data.split(',')
-        sql = sql % (values[0], values[1], values[2], values[3])
+        md5 = hash.getHash('%s,%s' % (values[2], values[0]))
+        sql = sql % (values[0], values[1], values[2], md5)
         print(sql)
         self.__executeQuery(sql)
 

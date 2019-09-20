@@ -31,6 +31,7 @@ def insertMetadata(data):
 
 def searchMD5(data):
     db = DB()
+    db.serchMD5(data)
 
 def deleteMD5(data):
     db = DB()

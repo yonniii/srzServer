@@ -16,6 +16,20 @@ def receive(sock):
     while True:
         recvData = sock.recv(1024)
 
+def insertMetadata(data):
+    db = DB()
+    db.insert(data)
+
+def searchMD5(data):
+    db = DB()
+
+def deleteMD5(data):
+    db = DB()
+    db.deleteHash(data)
+
+def deleteOld(data):
+    db = DB()
+    db.deleteOld(data)
 
 port = 8081
 

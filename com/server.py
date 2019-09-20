@@ -20,6 +20,7 @@ def exeReq(typeData,reqData):
 def receive(sock):
     while True:
         recvData = sock.recv(1024)
+        exeReq(recvData[0],recvData[1:].decode())
 
 def insertMetadata(data):
     db = DB()

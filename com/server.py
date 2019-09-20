@@ -40,6 +40,11 @@ class srzServer:
         datas = db.restore()
         print(datas)
 
+    def run(self):
+        receiver = threading.Thread(target=self.receive, args=(connectionSock,))
+
+        receiver.start()
+
 port = 8081
 
 serverSock = socket(AF_INET, SOCK_STREAM)
@@ -52,9 +57,8 @@ connectionSock, addr = serverSock.accept()
 
 print(str(addr), '에서 접속되었습니다.')
 
-receiver = threading.Thread(target=receive, args=(connectionSock,))
-
-receiver.start()
+s = srzServer()
+s.run()
 
 while True:
     time.sleep(1)

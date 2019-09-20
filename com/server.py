@@ -10,16 +10,33 @@ def send(sock):
         sendData = input('>>>')
         sock.send(sendData.encode('utf-8'))
 
+def exeReq(typeData,reqData):
+    reqType = typeData
+    if reqType is 48:
+        insertMetadata(reqData)
+    elif reqType is 49:
+        deleteOld(reqData)
 
 def receive(sock):
-    db = DB()
     while True:
         recvData = sock.recv(1024)
-        db.insert(recvData.decode())
-        db.deleteHash('14f18045f8648ba6c05c8c0c486d2f55')
-        db.deleteOld('1567046609.8834774')
-        print('상대방 :', recvData.decode('utf-8'),'을 DB에 insert')
+        exeReq(recvData[0],recvData[1:].decode())
 
+def insertMetadata(data):
+    db = DB()
+    db.insert(data)
+
+def searchMD5(data):
+    db = DB()
+    db.serchMD5(data)
+
+def deleteMD5(data):
+    db = DB()
+    db.deleteHash(data)
+
+def deleteOld(data):
+    db = DB()
+    db.deleteOld(data)
 
 port = 8081
 

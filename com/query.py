@@ -26,6 +26,12 @@ class DB:
         print(sql)
         self.__executeQuery(sql)
 
+    def serchMD5(self,md5):
+        sql= """SELECT * FROM srzserver.metadatas WHERE hash='%s'"""
+        sql = sql%(md5)
+        self.__executeQuery(sql)
+        return self.__cursor.fetchall()
+
     def deleteHash(self, hash):
         sql = """DELETE FROM metadatas WHERE hash = '%s'""" % (hash)
         print(sql)

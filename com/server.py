@@ -38,6 +38,10 @@ def deleteOld(data):
     db = DB()
     db.deleteOld(data)
 
+def restoreMetadata():
+    db = DB()
+    db.restore()
+
 port = 8081
 
 serverSock = socket(AF_INET, SOCK_STREAM)

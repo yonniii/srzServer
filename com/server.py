@@ -5,43 +5,45 @@ import time
 from query import DB
 
 
-def send(sock):
-    while True:
-        sendData = input('>>>')
-        sock.send(sendData.encode('utf-8'))
+class srzServer:
 
-def exeReq(typeData,reqData):
-    reqType = typeData
-    if reqType is 48:
-        insertMetadata(reqData)
-    elif reqType is 49:
-        restoreMetadata()
+    def exeReq(self,typeData,reqData):
+        reqType = typeData
+        if reqType is 48:
+            self.insertMetadata(reqData)
+        elif reqType is 49:
+            self.restoreMetadata()
 
-def receive(sock):
-    while True:
-        recvData = sock.recv(1024)
-        exeReq(recvData[0],recvData[1:].decode())
+    def receive(self,sock):
+        while True:
+            recvData = sock.recv(1024)
+            self.exeReq(recvData[0],recvData[1:].decode())
 
-def insertMetadata(data):
-    db = DB()
-    db.insert(data)
+    def insertMetadata(self,data):
+        db = DB()
+        db.insert(data)
 
-def searchMD5(data):
-    db = DB()
-    db.serchMD5(data)
+    def searchMD5(self,data):
+        db = DB()
+        db.serchMD5(data)
 
-def deleteMD5(data):
-    db = DB()
-    db.deleteHash(data)
+    def deleteMD5(self,data):
+        db = DB()
+        db.deleteHash(self,data)
 
-def deleteOld(data):
-    db = DB()
-    db.deleteOld(data)
+    def deleteOld(self,data):
+        db = DB()
+        db.deleteOld(data)
 
-def restoreMetadata():
-    db = DB()
-    datas = db.restore()
-    print(datas)
+    def restoreMetadata(self):
+        db = DB()
+        datas = db.restore()
+        print(datas)
+
+    def run(self):
+        receiver = threading.Thread(target=self.receive, args=(connectionSock,))
+
+        receiver.start()
 
 port = 8081
 
@@ -55,11 +57,8 @@ connectionSock, addr = serverSock.accept()
 
 print(str(addr), '에서 접속되었습니다.')
 
-sender = threading.Thread(target=send, args=(connectionSock,))
-receiver = threading.Thread(target=receive, args=(connectionSock,))
-
-sender.start()
-receiver.start()
+s = srzServer()
+s.run()
 
 while True:
     time.sleep(1)

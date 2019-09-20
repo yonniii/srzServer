@@ -22,7 +22,6 @@ def exeReq(typeData,reqData):
         deleteOld(reqData)
 
 def receive(sock):
-    db = DB()
     while True:
         recvData = sock.recv(1024)
 

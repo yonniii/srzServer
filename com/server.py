@@ -10,6 +10,16 @@ def send(sock):
         sendData = input('>>>')
         sock.send(sendData.encode('utf-8'))
 
+def exeReq(typeData,reqData):
+    reqType = typeData
+    if reqType is 48:
+        insertMetadata(reqData)
+    elif reqType is 49:
+        searchMD5(reqData)
+    elif reqType is 50:
+        deleteMD5(reqData)
+    elif reqType is 51:
+        deleteOld(reqData)
 
 def receive(sock):
     db = DB()

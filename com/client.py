@@ -22,7 +22,7 @@ class SRZManager:
 
 
     def run(self):
-        sender = threading.Thread(target=self.send)
+        sender = threading.Thread(target=self.reqMeta)
         sender.start()
         sender.join()
 

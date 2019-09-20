@@ -15,7 +15,7 @@ def exeReq(typeData,reqData):
     if reqType is 48:
         insertMetadata(reqData)
     elif reqType is 49:
-        deleteOld(reqData)
+        restoreMetadata()
 
 def receive(sock):
     while True:
@@ -37,6 +37,10 @@ def deleteMD5(data):
 def deleteOld(data):
     db = DB()
     db.deleteOld(data)
+
+def restoreMetadata():
+    db = DB()
+    db.restore()
 
 port = 8081
 

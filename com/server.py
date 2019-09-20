@@ -5,11 +5,6 @@ import time
 from query import DB
 
 
-def send(sock):
-    while True:
-        sendData = input('>>>')
-        sock.send(sendData.encode('utf-8'))
-
 def exeReq(typeData,reqData):
     reqType = typeData
     if reqType is 48:
@@ -55,10 +50,8 @@ connectionSock, addr = serverSock.accept()
 
 print(str(addr), '에서 접속되었습니다.')
 
-sender = threading.Thread(target=send, args=(connectionSock,))
 receiver = threading.Thread(target=receive, args=(connectionSock,))
 
-sender.start()
 receiver.start()
 
 while True:

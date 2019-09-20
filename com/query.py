@@ -43,6 +43,6 @@ class DB:
         self.__executeQuery(sql)
 
     def restore(self):
-        sql = """SELECT * FROM metadatas"""
+        sql = """SELECT * FROM metadatas order by ctime DESC """ # 최근에 생성된 순으로 정렬
         self.__executeQuery(sql)
         return self.__cursor.fetchall()

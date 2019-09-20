@@ -40,7 +40,8 @@ def deleteOld(data):
 
 def restoreMetadata():
     db = DB()
-    db.restore()
+    datas = db.restore()
+    print(datas)
 
 port = 8081
 

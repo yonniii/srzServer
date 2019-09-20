@@ -15,10 +15,6 @@ def exeReq(typeData,reqData):
     if reqType is 48:
         insertMetadata(reqData)
     elif reqType is 49:
-        searchMD5(reqData)
-    elif reqType is 50:
-        deleteMD5(reqData)
-    elif reqType is 51:
         deleteOld(reqData)
 
 def receive(sock):

@@ -5,38 +5,40 @@ import time
 from query import DB
 
 
-def exeReq(typeData,reqData):
-    reqType = typeData
-    if reqType is 48:
-        insertMetadata(reqData)
-    elif reqType is 49:
-        restoreMetadata()
+class srzServer:
 
-def receive(sock):
-    while True:
-        recvData = sock.recv(1024)
-        exeReq(recvData[0],recvData[1:].decode())
+    def exeReq(self,typeData,reqData):
+        reqType = typeData
+        if reqType is 48:
+            self.insertMetadata(reqData)
+        elif reqType is 49:
+            self.restoreMetadata()
 
-def insertMetadata(data):
-    db = DB()
-    db.insert(data)
+    def receive(self,sock):
+        while True:
+            recvData = sock.recv(1024)
+            self.exeReq(recvData[0],recvData[1:].decode())
 
-def searchMD5(data):
-    db = DB()
-    db.serchMD5(data)
+    def insertMetadata(self,data):
+        db = DB()
+        db.insert(data)
 
-def deleteMD5(data):
-    db = DB()
-    db.deleteHash(data)
+    def searchMD5(self,data):
+        db = DB()
+        db.serchMD5(data)
 
-def deleteOld(data):
-    db = DB()
-    db.deleteOld(data)
+    def deleteMD5(self,data):
+        db = DB()
+        db.deleteHash(self,data)
 
-def restoreMetadata():
-    db = DB()
-    datas = db.restore()
-    print(datas)
+    def deleteOld(self,data):
+        db = DB()
+        db.deleteOld(data)
+
+    def restoreMetadata(self):
+        db = DB()
+        datas = db.restore()
+        print(datas)
 
 port = 8081
 

@@ -7,13 +7,19 @@ class SRZManager:
     def __init__(self,sock):
         self.__sock = sock
 
-    def send(self):
+    def sendMeta(self):
         g = getFiles()
         list = g.exe()
         for i in list:
+            i="1"+i
             self.__sock.send(i.encode('utf-8'))
             time.sleep(1)
         print('file info를 전송했습니다.')
+
+    def reqMeta(self):
+        reqM = "1"
+        self.__sock.send(reqM.encode('utf-8'))
+
 
     def run(self):
         sender = threading.Thread(target=self.send)

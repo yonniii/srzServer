@@ -11,18 +11,28 @@ class SRZManager:
         g = getFiles()
         list = g.exe()
         for i in list:
-            i="1"+i
-            self.__sock.send(i.encode('utf-8'))
+            data='0'+i
+            self.__sock.send(data.encode('utf-8'))
             time.sleep(1)
-        print('file info를 전송했습니다.')
+        print('Send file info')
 
     def reqMeta(self):
-        reqM = "1"
+        reqM = '1'
         self.__sock.send(reqM.encode('utf-8'))
 
+    def inputCmd(self):
+        print('SADFASDFSA')
+        while True:
+            sendData = input('0:sendMeta / 1:reqMeta / 2+md5 :search / 3+md5:delete / 4+time : delete before\n')
+            if sendData is '0':
+                self.sendMeta()
+            elif sendData is '1':
+                self.reqMeta()
+            else:
+                self.__sock.send(sendData.encode('utf-8'))
 
     def run(self):
-        sender = threading.Thread(target=self.reqMeta)
+        sender = threading.Thread(target=self.inputCmd)
         sender.start()
         sender.join()
 
@@ -54,20 +64,20 @@ class RecoveryManager:
         sender.join()
         receiver.join()
 
-def send(sock):
-    while True:
-        sendData = input('>>>')
-        sock.send(sendData.encode('utf-8'))
+# def send(sock):
+#     while True:
+#         sendData = input('>>>')
+#         sock.send(sendData.encode('utf-8'))
 
-port = 8081
+port = 8080
 
 clientSock = socket(AF_INET, SOCK_STREAM)
 clientSock.connect(('127.0.0.1', port))
 
-print('접속 완료')
+print('connect')
 
-sender = threading.Thread(target=send, args=(clientSock,))
-sender.start()
+# sender = threading.Thread(target=send, args=(clientSock,))
+# sender.start()
 srzmanager = SRZManager(clientSock)
 srzmanager.run()
 recovery = RecoveryManager(clientSock)

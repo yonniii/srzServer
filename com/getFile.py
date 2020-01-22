@@ -6,14 +6,14 @@ import string
 
 class getFiles:
     def __init__(self):
-        self.path_dir = 'C:\\Users\\yonnii\\Desktop\\3-2\\srzServer\\srzServer\\files'
+        self.path_dir = '/home/yonnii/srz/srzServer/files'
 
     def exe(self):
         fileList = os.listdir(self.path_dir)
         metalist = []
         if os.path.exists(self.path_dir):
             for i in fileList:
-                path = self.path_dir+"\\"+i
+                path = self.path_dir+"/"+i
                 fileinfo = os.stat(path)
                 # time = datetime.datetime.fromtimestamp(fileinfo.st_mtime)
                 time = fileinfo.st_mtime
@@ -26,4 +26,4 @@ class getFiles:
         return metalist
 
 g=getFiles()
-g.exe()
+print(g.exe())
